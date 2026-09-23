@@ -29,6 +29,7 @@ test("index.html exposes search metadata for emendar feriados", () => {
   includesText(html, '<meta name="description" content="Calcule o melhor período para tirar férias e emendar feriados nacionais, folgas semanais e datas extras para aumentar seus dias de descanso." />');
   includesText(html, `<link rel="canonical" href="${siteUrl}" />`);
   includesText(html, '<meta name="robots" content="index, follow" />');
+  includesText(html, '<meta name="google-site-verification" content="kSJR2sug0vVIFZUu9UncXI_5W2wErR4RLG_zhA3af0s" />');
   includesText(html, '<link rel="manifest" href="site.webmanifest" />');
   includesText(html, '<h1 id="app-title">Otimizador de Folgas</h1>');
   includesText(html, "Calcule o melhor período para emendar feriados e aumentar seu descanso.");
