@@ -460,6 +460,31 @@ h1 {
   font-size: 1.38rem;
 }
 
+.metric-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-items: center;
+}
+
+.metric-mini {
+  min-width: 0;
+}
+
+.metric-mini + .metric-mini {
+  border-left: 1px solid var(--line);
+  padding-left: 10px;
+}
+
+.metric-mini span {
+  margin-bottom: 6px;
+  font-size: 0.68rem;
+}
+
+.metric-mini strong {
+  font-size: 0.98rem;
+}
+
 .timeline-section,
 .reason-section,
 .alternatives-section {
@@ -592,6 +617,7 @@ h1 {
     display: grid;
   }
 }
+
 
 
 

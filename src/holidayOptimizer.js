@@ -202,12 +202,15 @@
       holidayMap
     );
 
+    const totalRestDays = daysBetweenInclusive(restStart, restEnd);
+
     return {
       vacationStart,
       vacationEnd,
       restStart,
       restEnd,
-      totalRestDays: daysBetweenInclusive(restStart, restEnd),
+      totalRestDays,
+      gainedRestDays: totalRestDays - leaveDays,
       existingDaysOffInsideVacation,
       startsOnExistingDayOff: isExistingDayOff(vacationStart, weeklyOffSet, holidayMap),
       holidaysInRest: getHolidayNamesBetween(restStart, restEnd, holidayMap),
@@ -272,4 +275,5 @@
     parseDate,
   };
 });
+
 

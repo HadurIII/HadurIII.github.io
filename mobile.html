@@ -468,6 +468,31 @@ h1 {
   font-size: 1.38rem;
 }
 
+.metric-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-items: center;
+}
+
+.metric-mini {
+  min-width: 0;
+}
+
+.metric-mini + .metric-mini {
+  border-left: 1px solid var(--line);
+  padding-left: 10px;
+}
+
+.metric-mini span {
+  margin-bottom: 6px;
+  font-size: 0.68rem;
+}
+
+.metric-mini strong {
+  font-size: 0.98rem;
+}
+
 .timeline-section,
 .reason-section,
 .alternatives-section {
@@ -605,6 +630,7 @@ h1 {
 
 
 
+
 </style>
   </head>
   <body>
@@ -622,7 +648,7 @@ h1 {
             <div class="field-grid">
               <label class="field">
                 <span>Dias de férias/folga</span>
-                <input id="leave-days" name="leaveDays" type="number" min="1" step="1" value="9" required />
+                <input id="leave-days" name="leaveDays" type="number" min="1" step="1" value="13" required />
               </label>
 
               <label class="field">
@@ -631,7 +657,7 @@ h1 {
               </label>
 
               <label class="field">
-                <span>Data máxima final</span>
+                <span>Data máxima de término</span>
                 <input id="max-end" name="maxEnd" type="date" required />
               </label>
             </div>
@@ -682,7 +708,7 @@ h1 {
                 <span id="national-holidays-title">Feriados nacionais</span>
                 <span id="national-holidays-count" class="count-pill">0</span>
               </summary>
-              <p class="helper-text">De hoje até o final do ano seguinte.</p>
+              <p class="helper-text">De hoje até o final do próximo ano.</p>
               <ul id="national-holidays-list" class="national-holidays-list"></ul>
             </details>
           </form>
@@ -903,12 +929,15 @@ h1 {
       holidayMap
     );
 
+    const totalRestDays = daysBetweenInclusive(restStart, restEnd);
+
     return {
       vacationStart,
       vacationEnd,
       restStart,
       restEnd,
-      totalRestDays: daysBetweenInclusive(restStart, restEnd),
+      totalRestDays,
+      gainedRestDays: totalRestDays - leaveDays,
       existingDaysOffInsideVacation,
       startsOnExistingDayOff: isExistingDayOff(vacationStart, weeklyOffSet, holidayMap),
       holidaysInRest: getHolidayNamesBetween(restStart, restEnd, holidayMap),
@@ -973,6 +1002,7 @@ h1 {
     parseDate,
   };
 });
+
 
 
 </script>
@@ -1186,9 +1216,15 @@ h1 {
             <span>Descanso total</span>
             <strong>${formatDateRange(best.restStart, best.restEnd)}</strong>
           </div>
-          <div class="metric">
-            <span>Dias 'perdidos'</span>
-            <strong>${pluralizeDays(best.existingDaysOffInsideVacation)}</strong>
+          <div class="metric metric-split">
+            <div class="metric-mini">
+              <span>Dias 'perdidos'</span>
+              <strong>${pluralizeDays(best.existingDaysOffInsideVacation)}</strong>
+            </div>
+            <div class="metric-mini">
+              <span>Dias 'ganhos'</span>
+              <strong>${pluralizeDays(best.gainedRestDays)}</strong>
+            </div>
           </div>
         </div>
       </div>
@@ -1369,9 +1405,11 @@ h1 {
 
 
 
+
 </script>
   </body>
 </html>
+
 
 
 

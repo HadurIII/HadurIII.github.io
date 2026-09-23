@@ -36,6 +36,7 @@ test("finds the longest rest block even when the best vacation starts on a regul
   });
 
   assert.equal(result.best.totalRestDays, 11);
+  assert.equal(result.best.gainedRestDays, 2);
   sameDate(result.best.vacationStart, "2026-05-06");
   sameDate(result.best.vacationEnd, "2026-05-14");
   sameDate(result.best.restStart, "2026-05-05");
@@ -140,6 +141,7 @@ test("date math stays stable across month boundaries", () => {
   sameDate(addDays("2026-01-31", 1), "2026-02-01");
   sameDate(addDays("2026-03-01", -1), "2026-02-28");
 });
+
 
 
 

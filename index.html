@@ -21,7 +21,7 @@
             <div class="field-grid">
               <label class="field">
                 <span>Dias de férias/folga</span>
-                <input id="leave-days" name="leaveDays" type="number" min="1" step="1" value="9" required />
+                <input id="leave-days" name="leaveDays" type="number" min="1" step="1" value="13" required />
               </label>
 
               <label class="field">
@@ -30,7 +30,7 @@
               </label>
 
               <label class="field">
-                <span>Data máxima final</span>
+                <span>Data máxima de término</span>
                 <input id="max-end" name="maxEnd" type="date" required />
               </label>
             </div>
@@ -81,7 +81,7 @@
                 <span id="national-holidays-title">Feriados nacionais</span>
                 <span id="national-holidays-count" class="count-pill">0</span>
               </summary>
-              <p class="helper-text">De hoje até o final do ano seguinte.</p>
+              <p class="helper-text">De hoje até o final do próximo ano.</p>
               <ul id="national-holidays-list" class="national-holidays-list"></ul>
             </details>
           </form>
@@ -101,6 +101,7 @@
     <script src="src/app.js"></script>
   </body>
 </html>
+
 
 
 

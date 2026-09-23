@@ -207,9 +207,15 @@
             <span>Descanso total</span>
             <strong>${formatDateRange(best.restStart, best.restEnd)}</strong>
           </div>
-          <div class="metric">
-            <span>Dias 'perdidos'</span>
-            <strong>${pluralizeDays(best.existingDaysOffInsideVacation)}</strong>
+          <div class="metric metric-split">
+            <div class="metric-mini">
+              <span>Dias 'perdidos'</span>
+              <strong>${pluralizeDays(best.existingDaysOffInsideVacation)}</strong>
+            </div>
+            <div class="metric-mini">
+              <span>Dias 'ganhos'</span>
+              <strong>${pluralizeDays(best.gainedRestDays)}</strong>
+            </div>
           </div>
         </div>
       </div>
@@ -385,6 +391,7 @@
   renderNationalHolidays();
   calculate();
 })();
+
 
 
 
