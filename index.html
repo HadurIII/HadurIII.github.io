@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Otimizador de Folgas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-labelledby="app-title">
+        <header class="page-header">
+          <div>
+            <p class="eyebrow">Feriados nacionais + suas folgas</p>
+            <h1 id="app-title">Otimizador de Folgas</h1>
+          </div>
+          <p class="scope-note">Pontos facultativos ficam fora do padrão. Adicione datas extras quando quiser considerá-los.</p>
+        </header>
+
+        <div class="layout-grid">
+          <form id="optimizer-form" class="panel controls-panel">
+            <div class="field-grid">
+              <label class="field">
+                <span>Dias de férias/folga</span>
+                <input id="leave-days" name="leaveDays" type="number" min="1" step="1" value="9" required />
+              </label>
+
+              <label class="field">
+                <span>Data mínima de início</span>
+                <input id="min-start" name="minStart" type="date" required />
+              </label>
+
+              <label class="field">
+                <span>Data máxima final</span>
+                <input id="max-end" name="maxEnd" type="date" required />
+              </label>
+            </div>
+
+            <fieldset class="weekday-fieldset">
+              <legend>Dias da semana que já são folga</legend>
+              <div class="weekday-grid" id="weekday-grid">
+                <label><input type="checkbox" name="weeklyOff" value="0" checked />Dom</label>
+                <label><input type="checkbox" name="weeklyOff" value="1" />Seg</label>
+                <label><input type="checkbox" name="weeklyOff" value="2" />Ter</label>
+                <label><input type="checkbox" name="weeklyOff" value="3" />Qua</label>
+                <label><input type="checkbox" name="weeklyOff" value="4" />Qui</label>
+                <label><input type="checkbox" name="weeklyOff" value="5" />Sex</label>
+                <label><input type="checkbox" name="weeklyOff" value="6" />Sáb</label>
+              </div>
+            </fieldset>
+
+            <section class="extra-holidays" aria-labelledby="extra-title">
+              <div class="section-heading">
+                <h2 id="extra-title">Datas extras</h2>
+                <span id="extra-count" class="count-pill">0</span>
+              </div>
+
+              <div class="extra-entry">
+                <label class="field compact-field">
+                  <span>Data</span>
+                  <input id="extra-date" type="date" />
+                </label>
+                <label class="field compact-field grow-field">
+                  <span>Nome</span>
+                  <input id="extra-name" type="text" placeholder="Ex.: feriado municipal" />
+                </label>
+                <button id="add-extra" class="secondary-button" type="button">Adicionar</button>
+              </div>
+
+              <ul id="extra-list" class="extra-list" aria-live="polite"></ul>
+            </section>
+
+            <div class="form-actions">
+              <button class="primary-button" type="submit">Calcular melhor período</button>
+              <button id="reset-button" class="ghost-button" type="button">Limpar extras</button>
+            </div>
+
+            <p id="form-error" class="form-error" role="alert"></p>
+
+            <details class="national-holidays">
+              <summary>
+                <span id="national-holidays-title">Feriados nacionais</span>
+                <span id="national-holidays-count" class="count-pill">0</span>
+              </summary>
+              <p class="helper-text">De hoje até o final do ano seguinte.</p>
+              <ul id="national-holidays-list" class="national-holidays-list"></ul>
+            </details>
+          </form>
+
+          <section id="result-panel" class="panel result-panel" aria-live="polite">
+            <div class="empty-state">
+              <p class="empty-kicker">Resultado</p>
+              <h2>Preencha a janela e calcule.</h2>
+              <p>O melhor período aparece aqui com o bloco total de descanso.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="src/holidayOptimizer.js"></script>
+    <script src="src/app.js"></script>
+  </body>
+</html>
+
+
