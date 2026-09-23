@@ -209,11 +209,23 @@
           </div>
           <div class="metric metric-split">
             <div class="metric-mini">
-              <span>Dias 'perdidos'</span>
+              <div class="metric-label">
+                Dias 'perdidos'
+                <span class="tooltip">
+                  <button class="tooltip-toggle" type="button" aria-expanded="false" aria-describedby="lost-days-help" aria-label="Explicar dias perdidos">?</button>
+                  <span id="lost-days-help" class="tooltip-bubble" role="tooltip">Dias que já seriam folga/feriado, mas ficaram dentro do período de férias informado.</span>
+                </span>
+              </div>
               <strong>${pluralizeDays(best.existingDaysOffInsideVacation)}</strong>
             </div>
             <div class="metric-mini">
-              <span>Dias 'ganhos'</span>
+              <div class="metric-label">
+                Dias 'ganhos'
+                <span class="tooltip">
+                  <button class="tooltip-toggle" type="button" aria-expanded="false" aria-describedby="gained-days-help" aria-label="Explicar dias ganhos">?</button>
+                  <span id="gained-days-help" class="tooltip-bubble" role="tooltip">Dias extras de descanso contínuo além dos dias de férias usados.</span>
+                </span>
+              </div>
               <strong>${pluralizeDays(best.gainedRestDays)}</strong>
             </div>
           </div>
@@ -380,6 +392,39 @@
     calculate();
   });
 
+  function closeMetricTooltips(exceptTooltip) {
+    resultPanel.querySelectorAll(".tooltip.is-open").forEach((tooltip) => {
+      if (tooltip === exceptTooltip) {
+        return;
+      }
+      tooltip.classList.remove("is-open");
+      tooltip.querySelector(".tooltip-toggle")?.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  resultPanel.addEventListener("click", (event) => {
+    const toggle = event.target.closest(".tooltip-toggle");
+    if (!toggle) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const tooltip = toggle.closest(".tooltip");
+    const shouldOpen = !tooltip.classList.contains("is-open");
+    closeMetricTooltips(tooltip);
+    tooltip.classList.toggle("is-open", shouldOpen);
+    toggle.setAttribute("aria-expanded", String(shouldOpen));
+  });
+
+  document.addEventListener("click", () => closeMetricTooltips());
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMetricTooltips();
+    }
+  });
+
   form.addEventListener("change", (event) => {
     if (event.target.matches("input")) {
       calculate();
@@ -391,6 +436,7 @@
   renderNationalHolidays();
   calculate();
 })();
+
 
 
 

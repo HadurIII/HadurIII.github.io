@@ -4,7 +4,45 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Otimizador de Folgas</title>
+    <title>Folgapp - Emendar feriados e calcular melhor período de férias</title>
+    <meta name="description" content="Calcule o melhor período para tirar férias e emendar feriados nacionais, folgas semanais e datas extras para aumentar seus dias de descanso." />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#216e53" />
+    <link rel="canonical" href="https://haduriii.github.io/folgapp/" />
+    <link rel="manifest" href="site.webmanifest" />
+
+    <meta property="og:title" content="Folgapp - Emendar feriados" />
+    <meta property="og:description" content="Descubra o melhor período para tirar férias e juntar folgas com feriados nacionais." />
+    <meta property="og:url" content="https://haduriii.github.io/folgapp/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Folgapp" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Folgapp - Emendar feriados" />
+    <meta name="twitter:description" content="Calcule o melhor período de férias para aumentar seus dias de descanso." />
+    <meta name="twitter:url" content="https://haduriii.github.io/folgapp/" />
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Folgapp",
+  "alternateName": [
+    "Otimizador de Folgas",
+    "Emendar feriados",
+    "Imendar feriados"
+  ],
+  "url": "https://haduriii.github.io/folgapp/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "description": "Calculadora para encontrar o melhor período de férias e emendar feriados nacionais, folgas semanais e datas extras.",
+  "inLanguage": "pt-BR",
+  "isAccessibleForFree": true,
+  "browserRequirements": "Requires JavaScript."
+}
+    </script>
+
     <style>
 :root {
   color-scheme: light;
@@ -484,13 +522,90 @@ h1 {
   padding-left: 10px;
 }
 
-.metric-mini span {
+.metric-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   margin-bottom: 6px;
+  color: var(--muted);
   font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .metric-mini strong {
   font-size: 0.98rem;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tooltip-toggle {
+  display: inline-grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  padding: 0;
+  color: var(--accent-strong);
+  background: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tooltip-toggle:focus-visible {
+  outline: 3px solid var(--accent-soft);
+  outline-offset: 2px;
+}
+
+.tooltip-bubble {
+  position: absolute;
+  z-index: 5;
+  right: -10px;
+  bottom: calc(100% + 8px);
+  width: min(230px, 68vw);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 9px 10px;
+  color: var(--ink);
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(23, 32, 24, 0.16);
+  font-size: 0.76rem;
+  font-weight: 650;
+  line-height: 1.35;
+  text-transform: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 140ms ease, transform 140ms ease, visibility 140ms ease;
+  visibility: hidden;
+}
+
+.tooltip-bubble::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  bottom: -6px;
+  width: 10px;
+  height: 10px;
+  border-right: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+  background: #ffffff;
+  transform: rotate(45deg);
+}
+
+.tooltip:hover .tooltip-bubble,
+.tooltip:focus-within .tooltip-bubble,
+.tooltip.is-open .tooltip-bubble {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
 }
 
 .timeline-section,
@@ -631,6 +746,7 @@ h1 {
 
 
 
+
 </style>
   </head>
   <body>
@@ -640,7 +756,7 @@ h1 {
           <div>
             <h1 id="app-title">Otimizador de Folgas</h1>
           </div>
-          <p class="scope-note">Pontos facultativos ficam fora do padrão. Adicione datas extras quando quiser considerá-los.</p>
+          <p class="scope-note">Calcule o melhor período para emendar feriados e aumentar seu descanso.</p>
         </header>
 
         <div class="layout-grid">
@@ -1218,11 +1334,23 @@ h1 {
           </div>
           <div class="metric metric-split">
             <div class="metric-mini">
-              <span>Dias 'perdidos'</span>
+              <div class="metric-label">
+                Dias 'perdidos'
+                <span class="tooltip">
+                  <button class="tooltip-toggle" type="button" aria-expanded="false" aria-describedby="lost-days-help" aria-label="Explicar dias perdidos">?</button>
+                  <span id="lost-days-help" class="tooltip-bubble" role="tooltip">Dias que já seriam folga/feriado, mas ficaram dentro do período de férias informado.</span>
+                </span>
+              </div>
               <strong>${pluralizeDays(best.existingDaysOffInsideVacation)}</strong>
             </div>
             <div class="metric-mini">
-              <span>Dias 'ganhos'</span>
+              <div class="metric-label">
+                Dias 'ganhos'
+                <span class="tooltip">
+                  <button class="tooltip-toggle" type="button" aria-expanded="false" aria-describedby="gained-days-help" aria-label="Explicar dias ganhos">?</button>
+                  <span id="gained-days-help" class="tooltip-bubble" role="tooltip">Dias extras de descanso contínuo além dos dias de férias usados.</span>
+                </span>
+              </div>
               <strong>${pluralizeDays(best.gainedRestDays)}</strong>
             </div>
           </div>
@@ -1389,6 +1517,39 @@ h1 {
     calculate();
   });
 
+  function closeMetricTooltips(exceptTooltip) {
+    resultPanel.querySelectorAll(".tooltip.is-open").forEach((tooltip) => {
+      if (tooltip === exceptTooltip) {
+        return;
+      }
+      tooltip.classList.remove("is-open");
+      tooltip.querySelector(".tooltip-toggle")?.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  resultPanel.addEventListener("click", (event) => {
+    const toggle = event.target.closest(".tooltip-toggle");
+    if (!toggle) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const tooltip = toggle.closest(".tooltip");
+    const shouldOpen = !tooltip.classList.contains("is-open");
+    closeMetricTooltips(tooltip);
+    tooltip.classList.toggle("is-open", shouldOpen);
+    toggle.setAttribute("aria-expanded", String(shouldOpen));
+  });
+
+  document.addEventListener("click", () => closeMetricTooltips());
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMetricTooltips();
+    }
+  });
+
   form.addEventListener("change", (event) => {
     if (event.target.matches("input")) {
       calculate();
@@ -1406,11 +1567,7 @@ h1 {
 
 
 
+
 </script>
   </body>
 </html>
-
-
-
-
-

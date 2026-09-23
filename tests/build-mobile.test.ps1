@@ -36,4 +36,19 @@ if ($html -notmatch 'build-mobile.ps1') {
     throw "mobile.html does not contain the generator marker."
 }
 
+if (-not $html.Contains('tooltip-toggle')) {
+    throw "mobile.html does not contain tooltip buttons for metric explanations."
+}
+
+if ((-not $html.Contains('lost-days-help')) -or (-not $html.Contains('folga/feriado'))) {
+    throw "mobile.html does not explain lost days."
+}
+
+if ((-not $html.Contains('gained-days-help')) -or (-not $html.Contains('descanso'))) {
+    throw "mobile.html does not explain gained days."
+}
+
 Write-Host "ok - mobile.html is self-contained"
+
+
+
