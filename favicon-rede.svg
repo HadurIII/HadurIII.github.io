@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" role="img" aria-labelledby="title desc">
+  <title id="title">Folgapp - descanso na rede</title>
+  <desc id="desc">Pessoa descansando em uma rede sobre ondas, com fundo verde e azul.</desc>
+  <defs>
+    <linearGradient id="ocean" x1="0" y1="0" x2=".85" y2="1">
+      <stop stop-color="#15c792"/>
+      <stop offset=".36" stop-color="#009fae"/>
+      <stop offset=".67" stop-color="#0060db"/>
+      <stop offset="1" stop-color="#0730c6"/>
+    </linearGradient>
+    <radialGradient id="sunlight" cx=".17" cy=".02" r=".72">
+      <stop stop-color="#9aef55"/>
+      <stop offset=".3" stop-color="#58dc6d" stop-opacity=".8"/>
+      <stop offset=".7" stop-color="#18c897" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#18c897" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="water" cx=".05" cy=".77" r=".8">
+      <stop stop-color="#008aeb" stop-opacity=".6"/>
+      <stop offset="1" stop-color="#008aeb" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="640" rx="128" fill="url(#ocean)"/>
+  <rect width="640" height="640" rx="128" fill="url(#sunlight)"/>
+  <rect width="640" height="640" rx="128" fill="url(#water)"/>
+  <g fill="#fff" transform="translate(-193 -179)">
+    <g id="cordas">
+      <path d="M217 320C230 360 252 400 279 431L270 437C247 402 228 359 217 320Z"/>
+      <path d="M228 351C246 384 268 411 292 426L285 432C261 411 242 382 228 351Z"/>
+      <path d="M807 321C794 363 774 403 749 436L740 431C766 400 793 361 807 321Z"/>
+      <path d="M795 350C780 381 759 408 733 426L739 432C763 413 783 380 795 350Z"/>
+    </g>
+    <g id="pessoa">
+      <path d="M348 406C355 389 373 385 388 393C403 401 411 419 406 433C402 447 388 452 373 446C353 439 340 423 348 406Z"/>
+      <path d="M340 412C320 416 305 425 293 437C326 468 399 493 468 496C480 498 489 484 495 474L448 454C455 434 458 419 457 405C456 390 439 391 405 400L413 418L431 414L422 449L383 455L390 462L328 436L344 430Z"/>
+      <path d="M494 496C508 478 525 456 539 442C550 431 560 431 573 440L610 474L583 484L562 472L556 488C554 493 522 495 494 496Z"/>
+      <path d="M599 450C617 437 631 442 649 459L622 471Z"/>
+    </g>
+    <g id="rede">
+      <path d="M284 439C388 517 566 525 725 428L730 433C573 532 389 525 278 444Z"/>
+      <path fill-rule="evenodd" d="M275 445C386 524 572 530 736 438L747 445C698 515 607 568 519 577C430 590 339 540 275 445ZM542 556C608 535 668 505 711 474C670 517 609 546 542 556ZM642 488C675 470 706 453 733 439C710 461 675 479 642 488Z"/>
+    </g>
+    <g id="ondas">
+      <path d="M239 597C317 553 381 565 475 599C578 637 665 646 761 608C687 661 584 655 482 619C386 585 313 574 239 597Z"/>
+      <path d="M252 626C319 587 397 594 467 623C496 635 525 644 551 649C487 646 430 625 383 617C331 608 290 614 252 626Z"/>
+      <path d="M545 599C624 610 703 609 790 582C723 627 637 633 545 599Z"/>
+    </g>
+  </g>
+</svg>
