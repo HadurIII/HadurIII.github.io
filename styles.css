@@ -44,6 +44,61 @@ button {
   padding: 32px;
 }
 
+
+.page-frame {
+  display: grid;
+  grid-template-columns: minmax(120px, 160px) minmax(0, 1180px) minmax(120px, 160px);
+  gap: 24px;
+  align-items: start;
+  width: min(100%, 1560px);
+  margin: 0 auto;
+}
+
+.ad-slot {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  min-height: 520px;
+  border: 1px dashed #c9d2c4;
+  border-radius: 8px;
+  padding: 18px 14px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.62);
+  text-align: center;
+}
+
+.ad-slot-left,
+.ad-slot-right {
+  position: sticky;
+  top: 24px;
+}
+
+.ad-slot span {
+  margin-bottom: 10px;
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ad-slot strong {
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.ad-slot p {
+  max-width: 120px;
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.ad-slot-mobile {
+  display: none;
+  min-height: 96px;
+}
+
 .workspace {
   width: min(1180px, 100%);
   margin: 0 auto;
@@ -651,6 +706,18 @@ h1 {
   cursor: pointer;
 }
 
+
+@media (max-width: 1280px) {
+  .page-frame {
+    grid-template-columns: minmax(0, 1180px);
+    width: min(1180px, 100%);
+  }
+
+  .ad-slot-left,
+  .ad-slot-right {
+    display: none;
+  }
+}
 @media (max-width: 920px) {
   .app-shell {
     padding: 20px;
@@ -667,6 +734,12 @@ h1 {
 
   .scope-note {
     max-width: none;
+  }
+
+  .ad-slot-mobile {
+    display: grid;
+    grid-column: 1 / -1;
+    margin-bottom: 20px;
   }
 }
 
