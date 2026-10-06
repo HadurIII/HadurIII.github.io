@@ -4,7 +4,7 @@ const path = require("node:path");
 
 const root = path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
-const siteUrl = "https://haduriii.github.io/folgapp/";
+const siteUrl = "https://haduriii.github.io/";
 
 function test(name, fn) {
   try {
@@ -66,6 +66,27 @@ test("index.html includes WebApplication structured data", () => {
   ]);
 });
 
+test("index.html adds editorial content and institutional links", () => {
+  includesText(html, '<h2 id="como-funciona">Como funciona o Folgapp</h2>');
+  includesText(html, '<h2 id="emendar-feriados">O que significa emendar feriados</h2>');
+  includesText(html, '<h2 id="exemplo-calculo">Exemplo prático de cálculo</h2>');
+  includesText(html, '<h2 id="perguntas-frequentes">Perguntas frequentes</h2>');
+  includesText(html, '<a href="sobre.html">Sobre</a>');
+  includesText(html, '<a href="privacidade.html">Privacidade</a>');
+  includesText(html, '<a href="contato.html">Contato</a>');
+});
+
+test("institutional pages exist with indexable metadata", () => {
+  for (const page of ["sobre.html", "privacidade.html", "contato.html"]) {
+    const pageHtml = fs.readFileSync(path.join(root, page), "utf8");
+    includesText(pageHtml, '<meta name="robots" content="index, follow" />');
+    includesText(pageHtml, '<link rel="stylesheet" href="styles.css" />');
+  }
+
+  includesText(fs.readFileSync(path.join(root, "privacidade.html"), "utf8"), "Google AdSense");
+  includesText(fs.readFileSync(path.join(root, "contato.html"), "utf8"), "https://github.com/HadurIII/HadurIII.github.io/issues");
+});
+
 test("robots.txt allows indexing and points to sitemap.xml", () => {
   const robots = fs.readFileSync(path.join(root, "robots.txt"), "utf8");
 
@@ -74,11 +95,19 @@ test("robots.txt allows indexing and points to sitemap.xml", () => {
   includesText(robots, `Sitemap: ${siteUrl}sitemap.xml`);
 });
 
-test("sitemap.xml lists the published Folgapp URL", () => {
+test("sitemap.xml lists the published Folgapp pages", () => {
   const sitemap = fs.readFileSync(path.join(root, "sitemap.xml"), "utf8");
 
   includesText(sitemap, "<urlset");
   includesText(sitemap, `<loc>${siteUrl}</loc>`);
+  includesText(sitemap, `<loc>${siteUrl}sobre.html</loc>`);
+  includesText(sitemap, `<loc>${siteUrl}privacidade.html</loc>`);
+  includesText(sitemap, `<loc>${siteUrl}contato.html</loc>`);
+});
+
+test("ads.txt authorizes the AdSense publisher", () => {
+  const adsTxt = fs.readFileSync(path.join(root, "ads.txt"), "utf8").trim();
+  assert.equal(adsTxt, "google.com, pub-5982594533644359, DIRECT, f08c47fec0942fa0");
 });
 
 test("site.webmanifest describes the Folgapp web app", () => {
@@ -86,8 +115,8 @@ test("site.webmanifest describes the Folgapp web app", () => {
 
   assert.equal(manifest.name, "Folgapp - Emendar feriados");
   assert.equal(manifest.short_name, "Folgapp");
-  assert.equal(manifest.start_url, "/folgapp/");
-  assert.equal(manifest.scope, "/folgapp/");
+  assert.equal(manifest.start_url, "/");
+  assert.equal(manifest.scope, "/");
   assert.equal(manifest.display, "standalone");
   assert.match(manifest.description, /emendar feriados/i);
 });
