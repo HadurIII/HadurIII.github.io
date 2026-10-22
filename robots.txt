@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://haduriii.github.io/folgapp/sitemap.xml
+Sitemap: https://haduriii.github.io/sitemap.xml

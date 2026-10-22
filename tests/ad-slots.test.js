@@ -21,25 +21,22 @@ function includesText(text, expected) {
   assert.ok(text.includes(expected), `Expected to find: ${expected}`);
 }
 
-test("index.html defines desktop and mobile advertising slots", () => {
-  includesText(html, '<div class="page-frame">');
-  includesText(html, '<aside class="ad-slot ad-slot-left" aria-label="Publicidade lateral esquerda" data-ad-slot="desktop-left">');
-  includesText(html, '<aside class="ad-slot ad-slot-right" aria-label="Publicidade lateral direita" data-ad-slot="desktop-right">');
-  includesText(html, '<aside class="ad-slot ad-slot-mobile" aria-label="Publicidade" data-ad-slot="mobile-bottom">');
-  includesText(html, '<span>Publicidade</span>');
-  assert.ok(
-    html.indexOf('data-ad-slot="mobile-bottom"') < html.indexOf('<div class="layout-grid">'),
-    "Expected the mobile ad slot to appear before the main layout grid"
-  );
+test("index.html keeps the AdSense base script for site review", () => {
+  const matches = html.match(/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/g) || [];
+
+  assert.equal(matches.length, 1);
+  includesText(html, "ca-pub-5982594533644359");
 });
 
-test("styles.css positions ad slots responsively", () => {
-  includesText(css, ".page-frame");
-  includesText(css, ".ad-slot");
-  includesText(css, ".ad-slot-left");
-  includesText(css, ".ad-slot-right");
-  includesText(css, ".ad-slot-mobile");
-  includesText(css, "grid-template-columns: minmax(120px, 160px) minmax(0, 1180px) minmax(120px, 160px);");
-  includesText(css, "@media (max-width: 1280px)");
-  includesText(css, "@media (max-width: 920px)");
+test("index.html temporarily disables live ad slots during review", () => {
+  assert.equal(html.includes('<ins class="adsbygoogle"'), false);
+  assert.equal(html.includes("adsbygoogle = window.adsbygoogle"), false);
+  assert.equal(html.includes("data-ad-slot="), false);
+  assert.equal(html.includes("Publicidade lateral"), false);
+});
+
+test("styles.css focuses layout on editor content", () => {
+  includesText(css, ".layout-grid");
+  includesText(css, ".content-section");
+  includesText(css, ".site-footer");
 });
