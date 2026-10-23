@@ -759,6 +759,27 @@ h1 {
   margin: 8px 0 0;
 }
 
+.sources-section {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.sources-section h2 {
+  font-size: 1rem;
+}
+
+.sources-section a {
+  color: var(--accent-strong);
+}
+
+.site-credit {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 .site-footer {
   display: flex;
   flex-wrap: wrap;
